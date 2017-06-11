@@ -42,7 +42,7 @@ public class WordCounterResult {
 		return totalCount;
 	}
 	
-	public Map<String, Integer> getSortedWordCount(boolean ascending){
+	public Map<String, Integer> getSortedWordCount(final boolean ascending){
 		
 		List<Map.Entry<String, Integer>> list = new ArrayList<>(wordCount.entrySet());
 		
