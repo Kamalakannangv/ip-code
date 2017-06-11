@@ -5,14 +5,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.BadPaddingException;
@@ -20,6 +23,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import com.google.common.io.BaseEncoding;
 
@@ -101,7 +105,7 @@ public class Cryptographer {
 		return decryptedString;
 	}
 	
-	private Key getKey(){
+	private Key getKeyFromKeyStore(){
 		InputStream keystoreStream;
 		try {
 			keystoreStream = new FileInputStream(keyStoreFileNamePath);
@@ -125,6 +129,21 @@ public class Cryptographer {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private Key getKey(){
+		byte[] keyByteArray = "password".getBytes();
+		SecretKeySpec secretKeySpec = null;
+		try {
+			MessageDigest sha = MessageDigest.getInstance("SHA-1");
+			keyByteArray = sha.digest(keyByteArray);
+			keyByteArray = Arrays.copyOf(keyByteArray, 16);
+			secretKeySpec = new SecretKeySpec(keyByteArray, "AES");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return secretKeySpec;
+		
 	}
 	
 	
