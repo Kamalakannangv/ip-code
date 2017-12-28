@@ -25,7 +25,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.google.common.io.BaseEncoding;
 
 public class Cryptographer {
 	
