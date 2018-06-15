@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,9 +12,9 @@ import org.json.simple.parser.ParseException;
 
 public abstract class DisplayApplication {
 	
-	private static final String dataFilePath = "/META-INF/config/ip/designpattern/creational/factorymethod/customer-data.json";
+	private static final String dataFilePath = "/META-INF/config/ip/designpattern/creational/abstractfactory/customer-policy-data.json";
 	
-	protected JSONObject getData(){
+	public JSONObject getData(){
 		JSONObject jsonObject = null;
 		JSONParser jsonParser = null;
 		try {
@@ -32,11 +33,10 @@ public abstract class DisplayApplication {
 		return jsonObject;
 	}
 	
-	public void displayCustomerDetail(long customerId){
-		Customer customer = getCustomer(customerId);
-		customer.printCustomer();
-	}
+	public abstract void displayCustomerDetail(long customerId);
 
 	protected abstract Customer getCustomer(long customerId);
+	
+	protected abstract List<Policy> getPolicy(long customerId);
 	
 }

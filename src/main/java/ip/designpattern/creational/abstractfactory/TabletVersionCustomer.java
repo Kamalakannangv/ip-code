@@ -1,5 +1,8 @@
 package ip.designpattern.creational.abstractfactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabletVersionCustomer extends AbstractCustomer {
 	
 	private String firstName;
@@ -36,12 +39,34 @@ public class TabletVersionCustomer extends AbstractCustomer {
 
 	@Override
 	public void printCustomer() {
-		System.out.println("\nCustomer data in Tablet Application");
-		System.out.println("***********************************");
-		System.out.format("%-20s", "Customer ID").println(": " + getCustomerId());
-		System.out.format("%-20s", "Customer First Name").println(": " + getFirstName());
-		System.out.format("%-20s", "Customer Last Name").println(": " + getLastName());
-		System.out.format("%-20s", "Customer Email ID").println(": " + getEmailId());
+				
+		List<Integer> columnWidth = new ArrayList<>();
+		columnWidth.add(20);
+		columnWidth.add(2);
+		columnWidth.add(30);
+		columnWidth.add(20);
+		columnWidth.add(2);
+		columnWidth.add(20);
+		
+		List<List<Object>> data = new ArrayList<>();
+		List<Object> firstRow = new ArrayList<>();
+		firstRow.add("Customer ID");
+		firstRow.add(":");
+		firstRow.add(getCustomerId());
+		firstRow.add("Customer Email ID");
+		firstRow.add(":");
+		firstRow.add(getEmailId());
+		data.add(firstRow);
+		List<Object> secondRow = new ArrayList<>();
+		secondRow.add("Customer First Name");
+		secondRow.add(":");
+		secondRow.add(getFirstName());
+		secondRow.add("Customer Last Name");
+		secondRow.add(":");
+		secondRow.add(getLastName());
+		data.add(secondRow);
+		UtilityClass.display(columnWidth, data);
+		
 	}
 
 }

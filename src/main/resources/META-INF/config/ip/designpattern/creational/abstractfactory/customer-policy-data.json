@@ -1,0 +1,30 @@
+{
+	"customer-id": 123,
+	"salutation" : "Mr.",
+	"first-name" : "Kishanthan",
+	"last-name"  : "K",
+	"short-name" : "Kitchu",
+	"mobile"	 : 987654321,
+	"email-id"	 : "kishanth.kamal@gmail.com"
+	"address"	 : "Guduvancherry,Chennai"
+	"policy"	 : [
+		{
+			"policy-id"	 : 100001,
+			"premium"	 : 10000,
+			"next-due"	 : "2019-08-11",
+			"sum-insured": 20000000
+		},
+		{
+			"policy-id"	 : 1000012,
+			"premium"	 : 5000,
+			"next-due"	 : "2019-04-11",
+			"sum-insured": 40000000
+		},
+		{
+			"policy-id"	 : 1000013,
+			"premium"	 : 560000,
+			"next-due"	 : "2019-04-21"
+			"sum-insured": 70000000
+		}
+	]
+}

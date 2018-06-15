@@ -39,4 +39,6 @@ public abstract class DisplayApplication {
 
 	protected abstract Customer getCustomer(long customerId);
 	
+	
+	
 }

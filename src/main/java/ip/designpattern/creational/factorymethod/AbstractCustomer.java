@@ -19,5 +19,4 @@ public abstract class AbstractCustomer implements Customer {
 
 	public abstract void printCustomer();
 	
-
 }

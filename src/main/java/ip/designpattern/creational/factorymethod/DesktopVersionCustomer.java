@@ -1,5 +1,8 @@
 package ip.designpattern.creational.factorymethod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DesktopVersionCustomer extends AbstractCustomer {
 
 	private String salutation;
@@ -65,11 +68,46 @@ public class DesktopVersionCustomer extends AbstractCustomer {
 	public void printCustomer() {
 		System.out.println("\nCustomer data in Desktop Application");
 		System.out.println("************************************");
-		System.out.format("%-20s", "Customer ID").println(": " + getCustomerId());
+		
+		List<Integer> columnWidth = new ArrayList<>();
+		columnWidth.add(20);
+		columnWidth.add(2);
+		columnWidth.add(30);
+		columnWidth.add(20);
+		columnWidth.add(2);
+		columnWidth.add(20);
+		
+		List<List<Object>> data = new ArrayList<>();
+		List<Object> firstRow = new ArrayList<>();
+		firstRow.add("Customer ID");
+		firstRow.add(":");
+		firstRow.add(getCustomerId());
+		firstRow.add("Customer Name");
+		firstRow.add(":");
+		firstRow.add(getSalutation() + " " + getFirstName() + " " + getLastName());
+		data.add(firstRow);
+		
+		List<Object> secondRow = new ArrayList<>();
+		secondRow.add("Customer Mobile No.");
+		secondRow.add(":");
+		secondRow.add(getMobileNumber());
+		secondRow.add("Customer Email ID");
+		secondRow.add(":");
+		secondRow.add(getEmailId());
+		data.add(secondRow);
+		
+		List<Object> thirdRow = new ArrayList<>();
+		thirdRow.add("Customer Address");
+		thirdRow.add(":");
+		thirdRow.add(getAddress());
+		data.add(thirdRow);
+		UtilityClass.display(columnWidth, data);
+		
+		/*System.out.format("%-20s", "Customer ID").println(": " + getCustomerId());
 		System.out.format("%-20s", "Customer Name").println(": " + getSalutation() + " " + getFirstName() + " " + getLastName());
 		System.out.format("%-20s", "Customer Mobile No.").println(": " + getMobileNumber());
 		System.out.format("%-20s", "Customer Email ID").println(": " + getEmailId());
-		System.out.format("%-20s", "Customer Address").println(": " + getAddress());
+		System.out.format("%-20s", "Customer Address").println(": " + getAddress());*/
 	}
 
 }

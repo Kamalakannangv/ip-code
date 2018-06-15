@@ -5,8 +5,8 @@
   <class id="1" language="java" name="ip.designpattern.creational.factorymethod.DesktopApplication" project="ip-code" 
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/DesktopApplication.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="489" y="278"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="470" y="273"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -16,7 +16,7 @@
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/DisplayApplication.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="121" width="183" x="184" y="23"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -26,7 +26,7 @@
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/MobileApplication.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="96" y="270"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -35,8 +35,8 @@
   <class id="4" language="java" name="ip.designpattern.creational.factorymethod.TabletApplication" project="ip-code" 
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/TabletApplication.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="287" y="275"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="274" y="272"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -46,7 +46,7 @@
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/Customer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="773" y="85"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -56,7 +56,7 @@
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/AbstractCustomer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="773" y="221"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -65,8 +65,8 @@
   <class id="7" language="java" name="ip.designpattern.creational.factorymethod.MobileVersionCustomer" project="ip-code" 
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/MobileVersionCustomer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="512" y="470"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="497" y="521"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -75,8 +75,8 @@
   <class id="8" language="java" name="ip.designpattern.creational.factorymethod.TabletVersionCustomer" project="ip-code" 
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/TabletVersionCustomer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="772" y="491"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="777" y="535"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
@@ -86,57 +86,57 @@
     project="ip-code" 
     file="/ip-code/src/main/java/ip/designpattern/creational/factorymethod/DesktopVersionCustomer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="983" y="545"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="986" y="590"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="true" private="false" static="false"/>      
       <operations public="true" package="false" protected="true" private="false" static="false"/>    
     </display>  
   </class>  
-  <realization id="10">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <generalization id="11">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="12">    
+  <generalization id="10">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <generalization id="13">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="14">    
+  <generalization id="11">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <dependency id="15">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <generalization id="16">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <dependency id="17">    
+  <dependency id="12">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="5"/>  
   </dependency>  
-  <dependency id="18">    
+  <dependency id="13">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <realization id="14">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <dependency id="15">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="7"/>  
   </dependency>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="7"/>    
+  <generalization id="16">    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
-  <dependency id="20">    
+  <generalization id="17">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <dependency id="18">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="9"/>  
   </dependency>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="false" protected="true" private="false" static="false"/>    

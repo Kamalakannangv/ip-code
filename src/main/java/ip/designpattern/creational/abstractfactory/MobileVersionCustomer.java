@@ -1,5 +1,8 @@
 package ip.designpattern.creational.abstractfactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MobileVersionCustomer extends AbstractCustomer {
 
 	private String shortName;
@@ -27,11 +30,28 @@ public class MobileVersionCustomer extends AbstractCustomer {
 
 	@Override
 	public void printCustomer() {
-		System.out.println("\nCustomer data in Mobile Application");
-		System.out.println("***********************************");
-		System.out.format("%-20s", "Customer ID").println(": " + getCustomerId());
-		System.out.format("%-20s", "Customer Short Name").println(": " + getShortName());
-		System.out.format("%-20s", "Customer Mobile No.").println(": " + getMobileNumber());
+		List<Integer> columnWidth = new ArrayList<>();
+		columnWidth.add(20);
+		columnWidth.add(2);
+		columnWidth.add(20);
+		List<List<Object>> data = new ArrayList<>();
+		List<Object> firstRow = new ArrayList<>();
+		firstRow.add("Customer ID");
+		firstRow.add(":");
+		firstRow.add(getCustomerId());
+		data.add(firstRow);
+		List<Object> secondRow = new ArrayList<>();
+		secondRow.add("Customer Short Name");
+		secondRow.add(":");
+		secondRow.add(getShortName());
+		data.add(secondRow);
+		List<Object> thirdRow = new ArrayList<>();
+		thirdRow.add("Customer Mobile No.");
+		thirdRow.add(":");
+		thirdRow.add(getMobileNumber());
+		data.add(thirdRow);
+		UtilityClass.display(columnWidth, data);
+		
 	}
 
 }
