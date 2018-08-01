@@ -114,7 +114,7 @@ public class DesktopApplication extends DisplayApplication {
 		secondHeaderRow.add("");
 		secondHeaderRow.add("|");
 		data.add(secondHeaderRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 		
 		System.out.println("|--------------------|--------------------|--------------------|------------------------------|");
 		for(Policy policy : policies){

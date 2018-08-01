@@ -99,6 +99,6 @@ public class DesktopVersionCustomer extends AbstractCustomer {
 		thirdRow.add(":");
 		thirdRow.add(getAddress());
 		data.add(thirdRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 	}
 }

@@ -65,7 +65,7 @@ public class TabletVersionCustomer extends AbstractCustomer {
 		secondRow.add(":");
 		secondRow.add(getLastName());
 		data.add(secondRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 		
 	}
 

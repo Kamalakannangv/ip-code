@@ -50,7 +50,7 @@ public class MobileVersionCustomer extends AbstractCustomer {
 		thirdRow.add(":");
 		thirdRow.add(getMobileNumber());
 		data.add(thirdRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 		
 	}
 

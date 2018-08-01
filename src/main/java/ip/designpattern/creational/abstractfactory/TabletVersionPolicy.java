@@ -52,7 +52,7 @@ public class TabletVersionPolicy extends AbstractPolicy {
 		secondRow.add(":");
 		secondRow.add(getNextDueDate());
 		data.add(secondRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 
 	}
 

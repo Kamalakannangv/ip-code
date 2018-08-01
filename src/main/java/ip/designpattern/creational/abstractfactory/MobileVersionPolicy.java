@@ -36,7 +36,7 @@ public class MobileVersionPolicy extends AbstractPolicy {
 		secondRow.add(":");
 		secondRow.add(getPremiumAmount());
 		data.add(secondRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 
 	}
 

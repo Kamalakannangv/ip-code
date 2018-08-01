@@ -1,12 +1,14 @@
-package ip.designpattern.creational.abstractfactory;
+package ip.designpattern.structural.composite;
 
 import java.util.Date;
 import java.util.List;
 
-public class UtilityClass {
+public class DisplayUtil {
 	
-public static void display(List<Integer> columLength, List<List<Object>> data){
-		
+public static String getFormattedString(List<Integer> columLength, List<List<Object>> data){
+	
+	StringBuffer strBuffer = new StringBuffer();
+			
 		for(int rowIndex = 0 ; rowIndex < data.size(); rowIndex++){
 			List<Object> columnData = data.get(rowIndex);
 			for(int columnIndex = 0; columnIndex < columnData.size(); columnIndex++){
@@ -34,10 +36,10 @@ public static void display(List<Integer> columLength, List<List<Object>> data){
 					}
 					value = valueBuffer.toString();
 				}
-				System.out.print(value);
+				strBuffer.append(value);
 			}
-			System.out.println();
 		}
+		return strBuffer.toString();
 	}
 
 }

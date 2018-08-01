@@ -62,7 +62,7 @@ public class DesktopVersionPolicy extends AbstractPolicy {
 		dataRow.add(getNextDueDate());
 		dataRow.add("|");
 		data.add(dataRow);
-		UtilityClass.display(columnWidth, data);
+		DisplayUtil.display(columnWidth, data);
 		
 
 	}
