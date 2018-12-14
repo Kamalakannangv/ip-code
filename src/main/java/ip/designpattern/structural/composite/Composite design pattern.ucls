@@ -46,7 +46,7 @@
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
+    <display labels="false" multiplicity="true"/>  
   </association>  
   <realization id="8">    
     <end type="SOURCE" refId="3"/>    
