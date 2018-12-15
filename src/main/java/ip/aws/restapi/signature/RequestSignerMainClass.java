@@ -3,10 +3,10 @@ package ip.aws.restapi.signature;
 public class RequestSignerMainClass {
 
     /** Put your access key here **/
-    private static final String awsAccessKey = "AKIAI5TMWE3QFOBS7ZFQ";
+    private static final String awsAccessKey = "";
     
     /** Put your secret key here **/
-    private static final String awsSecretKey = "B+SJGvjOqR0IDRYF1FrltPvPyW2s3yewtdsmsTgW";
+    private static final String awsSecretKey = "";
     
     /** Put your bucket name here **/
     private static final String bucketName = "ip.aws.s3.staticwebsite";

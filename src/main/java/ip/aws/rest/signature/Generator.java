@@ -10,8 +10,8 @@ import uk.co.lucasweb.aws.v4.signer.credentials.AwsCredentials;
 
 public class Generator {
 	
-	public static final String ACCESS_KEY = "AKIAI5TMWE3QFOBS7ZFQ";
-	public static final String SECRET_KEY = "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";
+	public static final String ACCESS_KEY = "";
+	public static final String SECRET_KEY = "";
 
 	public static String generate(){
 		String contentSha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
