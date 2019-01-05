@@ -10,6 +10,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
+import com.amazonaws.services.cognitoidp.model.AdminCreateUserResult;
 import com.amazonaws.services.cognitoidp.model.AdminInitiateAuthRequest;
 import com.amazonaws.services.cognitoidp.model.AdminInitiateAuthResult;
 import com.amazonaws.services.cognitoidp.model.AdminRespondToAuthChallengeRequest;
@@ -24,21 +25,23 @@ import com.amazonaws.services.cognitoidp.model.RespondToAuthChallengeResult;
 import com.amazonaws.services.cognitoidp.model.VerifySoftwareTokenRequest;
 import com.amazonaws.services.cognitoidp.model.VerifySoftwareTokenResult;
 
-public class CognitoMainClass {
+public class CognitoMainClass_old {
 	
 	public static void main(String[] args) {
-		CognitoMainClass mainClassObj = new CognitoMainClass();
+		CognitoMainClass_old mainClassObj = new CognitoMainClass_old();
 		AWSCognitoIdentityProvider cognitoClient = AWSCognitoIdentityProviderClientBuilder
 													.standard()
 													.withRegion(Regions.US_EAST_1)
 													.build();
+		
+		
+		// User creation by Admin
+		
 		AdminCreateUserRequest request = mainClassObj.getAdminCreateUserRequest();
-		/*
-		 * User creation by Admin
 		System.out.println("Request:\n"+request.toString());
 		AdminCreateUserResult adminCreateUserResult = cognitoClient.adminCreateUser(request);
 		System.out.println("\nResponse:\n"+adminCreateUserResult);
-		*/
+		
 		
 		
 		/*
@@ -75,7 +78,9 @@ public class CognitoMainClass {
 		System.out.println("\nVerifySoftwareTokenResult:\n"+verifySoftwareTokenResult);
 		*/
 		
-		InitiateAuthRequest authRequest = mainClassObj.getInitiateAuthRequest();
+		
+		// End User authentication
+		/*InitiateAuthRequest authRequest = mainClassObj.getInitiateAuthRequest();
 		System.out.println("Auth Request:\n"+authRequest);
 		InitiateAuthResult initiateAuthResult = cognitoClient.initiateAuth(authRequest);
 		System.out.println("\nAuth Response:\n"+initiateAuthResult);
@@ -84,7 +89,11 @@ public class CognitoMainClass {
 		System.out.println("\nAuth Challenge Request:\n"+respondToAuthChallengeRequest);
 		RespondToAuthChallengeResult respondToAuthChallengeResult = cognitoClient.respondToAuthChallenge(respondToAuthChallengeRequest);
 		System.out.println("\nAuth challegeResponse:\n"+respondToAuthChallengeResult);
+		*/
+		
+		
 		System.out.println("");
+		
 	}
 	
 	
@@ -185,11 +194,11 @@ public class CognitoMainClass {
 		//adminCreateUserRequest.setMessageAction(MessageActionType.SUPPRESS);
 		AttributeType emailAttribute = new AttributeType();
 		emailAttribute.setName("email");
-		emailAttribute.setValue("gkamalakanna@csc.com");
+		emailAttribute.setValue("kamal.gk@gmail.com");
 		List<AttributeType> userAttributes = new ArrayList<>();
 		userAttributes.add(emailAttribute);
 		adminCreateUserRequest.setUserAttributes(userAttributes);
-		adminCreateUserRequest.setUsername("gkamalakanna@csc.com");
+		adminCreateUserRequest.setUsername("kamal.gk@gmail.com");
 		adminCreateUserRequest.setUserPoolId("us-east-1_OppejjDfw");
 		return adminCreateUserRequest;
 	}
