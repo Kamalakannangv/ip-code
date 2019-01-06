@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class JavaHTTPServer implements Runnable{ 
 
 	private static final int PORT = 9876;

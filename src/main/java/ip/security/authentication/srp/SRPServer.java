@@ -2,7 +2,10 @@ package ip.security.authentication.srp;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -44,7 +47,7 @@ public class SRPServer {
 			if(requestBody != null){
 				String srpAuthStepStr = request.getHeaders().get(SRPConfig.HEADER_AUTH_STEP);
 				AuthenticationStep authStep = AuthenticationStep.valueOf(srpAuthStepStr);
-
+				Map<String, String> responseBodyAtts = new HashMap<>();
 				switch (authStep) {
 				case STEP1:
 					if(requestBody.has(SRPConfig.USERNAME)){
@@ -55,45 +58,66 @@ public class SRPServer {
 							SRP6ServerSession srpServerSession = new SRP6ServerSession(SRPConfig.config);
 							BigInteger b = srpServerSession.step1(user.getUsername(), salt, verifier);
 							user.setSrpServerSession(srpServerSession);
-							JSONObject responseBody = new JSONObject();
-							responseBody.put(SRPConfig.SALT, salt.toString());
-							responseBody.put(SRPConfig.B, b.toString());
+							responseBodyAtts.put(SRPConfig.SALT, salt.toString());
+							responseBodyAtts.put(SRPConfig.B, b.toString());
 							String sessionId = getRandomString();
 							user.setSessionId(sessionId);
-							responseBody.put(SRPConfig.SESSIONID, sessionId);
-
-							response = new HttpResponse(200, "Ok");
-							response.getHeaders().put("Server", "Java HTTP Server");
-							response.getHeaders().put("Date", new Date().toString());
-							response.getHeaders().put("Content-type", "Application/JSON");
-							response.setJsonBody(responseBody);
+							responseBodyAtts.put(SRPConfig.SESSIONID, sessionId);
 						}
 					}
 					break;
-
 				case STEP2:
 					if(requestBody.has(SRPConfig.A) && requestBody.has(SRPConfig.M1)){
 						User user = getUserBySessionId(requestBody.getString(SRPConfig.SESSIONID));
 						BigInteger a = new BigInteger(requestBody.getString(SRPConfig.A));
 						BigInteger m1 = new BigInteger(requestBody.getString(SRPConfig.M1));
 						BigInteger m2 = user.getSrpServerSession().step2(a, m1);
-
-						JSONObject responseBody = new JSONObject();
-						responseBody.put(SRPConfig.M2, m2.toString());
-
-						response = new HttpResponse(200, "Ok");
-						response.getHeaders().put("Server", "Java HTTP Server");
-						response.getHeaders().put("Date", new Date().toString());
-						response.getHeaders().put("Content-type", "Application/JSON");
-						response.setJsonBody(responseBody);
+						responseBodyAtts.put(SRPConfig.M2, m2.toString());
 						System.out.println("Encryption key on Server:" + user.getSrpServerSession().getSessionKey().toString());
 					}
 					break;
 				default:
 					break;
 				}
+				Map<String, String> headers = new HashMap<>();
+				headers.put("Server", "Java HTTP Server");
+				headers.put("Date", new Date().toString());
+				headers.put("Content-type", "Application/JSON");
+				response = buildResponse(200, "Ok", headers, responseBodyAtts);
 			}
-		}catch(JSONException | SRP6Exception e){
+		}catch(JSONException e){
+			e.printStackTrace();
+		}catch (SRP6Exception e) {
+			Map<String, String> responseBodyAtts = new HashMap<>();
+			responseBodyAtts.put("Error Message", e.getMessage());
+			Map<String, String> headers = new HashMap<>();
+			headers.put("Server", "Java HTTP Server");
+			headers.put("Date", new Date().toString());
+			headers.put("Content-type", "Application/JSON");
+			response = buildResponse(401, "Unauthorized", headers, responseBodyAtts);
+		}
+		return response;
+	}
+	
+	private HttpResponse buildResponse(int statusCode, String statusMsg, Map<String, String> headers, Map<String, String> responseAttributes){
+		HttpResponse response = new HttpResponse(statusCode, statusMsg);
+		try{
+			Iterator<String> headersIter = headers.keySet().iterator();
+			while(headersIter.hasNext()){
+				String headerName = headersIter.next();
+				String headerValue = headers.get(headerName);
+				response.getHeaders().put(headerName, headerValue);
+			}
+
+			Iterator<String> responseAttIter = responseAttributes.keySet().iterator();
+			JSONObject responseBody = new JSONObject();
+			while(responseAttIter.hasNext()){
+				String attName = responseAttIter.next();
+				String attValue = responseAttributes.get(attName);
+				responseBody.put(attName, attValue);
+			}
+			response.setJsonBody(responseBody);
+		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		return response;

@@ -8,6 +8,7 @@ public class UserClient {
 		UserClient user = new UserClient();
 		user.register("Kamal", "KitchMidhu");
 		user.authenticate("Kamal", "KitchMidhu");
+		user.authenticate("Kamal", "KitchuMidh");
 	}
 
 	public void register(String username, String password){

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -38,24 +39,22 @@ public class SRPClient {
 		// Compute verifier 'v'
 		BigInteger verifier = srpVerifierGenerator.generateVerifier(salt, username, password);
 
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost request = new HttpPost(SERVER_URL + SRPConfig.REGISTER_ENDPOINT);
-		request.addHeader(SRPConfig.HEADER_CONTENT_TYPE, "application/json");
-		request.addHeader(SRPConfig.HEADER_USER_AGENT, "Java Client");
+		Map<String, String> headers = new HashMap<>();
+		headers.put(SRPConfig.HEADER_CONTENT_TYPE, "application/json");
+		headers.put(SRPConfig.HEADER_USER_AGENT, "Java Client");
 
 		JSONObject userRegReqBody = new JSONObject();
 		try {
 			userRegReqBody.put(SRPConfig.USERNAME, username);
 			userRegReqBody.put(SRPConfig.SALT, salt.toString());
 			userRegReqBody.put(SRPConfig.VERIFIER, verifier.toString());
-			StringEntity jsonEntity = new StringEntity(userRegReqBody.toString(4), ContentType.APPLICATION_FORM_URLENCODED);
-			request.setEntity(jsonEntity);
-			HttpResponse response = httpClient.execute(request);
-			System.out.println("Response Status:" + response.getStatusLine());
-			System.out.println("Response Entity:" + response.getEntity());
-		} catch (JSONException | IOException e) {
+			System.out.println("\nUser Registration request\n-----------------------------------------");
+			sendHttpRequest(SERVER_URL + SRPConfig.REGISTER_ENDPOINT, "POST", headers, userRegReqBody);
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	public void authenticate(String username, String password){
@@ -74,35 +73,38 @@ public class SRPClient {
 			
 			userAuthReqBody = new JSONObject();
 			userAuthReqBody.put(SRPConfig.USERNAME, username);
+			System.out.println("\nUser Authentication STEP1 request\n---------------------------------------------");
 			responseJson = sendHttpRequest(endPoint, "POST", headers, userAuthReqBody);
-			System.out.println("Step1 Response: " + responseJson);
-			
-			//Step 2
-			BigInteger salt = new BigInteger(responseJson.getString(SRPConfig.SALT));
-			BigInteger b = new BigInteger(responseJson.getString(SRPConfig.B));
-			String sessionId = responseJson.getString(SRPConfig.SESSIONID);
-			SRP6ClientCredentials clientCredentials = srp6ClientSession.step2(SRPConfig.config, salt, b);
-			headers = new HashMap<>();
-			headers.put(SRPConfig.HEADER_CONTENT_TYPE, "application/json");
-			headers.put(SRPConfig.HEADER_USER_AGENT, "Java Client");
-			headers.put(SRPConfig.HEADER_AUTH_STEP, AuthenticationStep.STEP2.toString());
-			userAuthReqBody = new JSONObject();
-			userAuthReqBody.put(SRPConfig.A, clientCredentials.A.toString());
-			userAuthReqBody.put(SRPConfig.M1, clientCredentials.M1.toString());
-			userAuthReqBody.put(SRPConfig.SESSIONID, sessionId);
-			responseJson = sendHttpRequest(endPoint, "POST", headers, userAuthReqBody);
-			System.out.println("Step2 Response: " + responseJson);
-			
-			//Step 3
-			BigInteger m2 = new BigInteger(responseJson.getString(SRPConfig.M2));
-			srp6ClientSession.step3(m2);
-			System.out.println("Authentication completed, encryption key on Client:" + srp6ClientSession.getSessionKey().toString());
-			
+			if(null != responseJson){
+				//Step 2
+				BigInteger salt = new BigInteger(responseJson.getString(SRPConfig.SALT));
+				BigInteger b = new BigInteger(responseJson.getString(SRPConfig.B));
+				String sessionId = responseJson.getString(SRPConfig.SESSIONID);
+				SRP6ClientCredentials clientCredentials = srp6ClientSession.step2(SRPConfig.config, salt, b);
+				headers = new HashMap<>();
+				headers.put(SRPConfig.HEADER_CONTENT_TYPE, "application/json");
+				headers.put(SRPConfig.HEADER_USER_AGENT, "Java Client");
+				headers.put(SRPConfig.HEADER_AUTH_STEP, AuthenticationStep.STEP2.toString());
+				userAuthReqBody = new JSONObject();
+				userAuthReqBody.put(SRPConfig.A, clientCredentials.A.toString());
+				userAuthReqBody.put(SRPConfig.M1, clientCredentials.M1.toString());
+				userAuthReqBody.put(SRPConfig.SESSIONID, sessionId);
+				System.out.println("\nUser Authentication STEP2 request\n---------------------------------------------");
+				responseJson = sendHttpRequest(endPoint, "POST", headers, userAuthReqBody);
+				if(null != responseJson){
+					//Step 3
+					if(responseJson.has(SRPConfig.M2)){
+						BigInteger m2 = new BigInteger(responseJson.getString(SRPConfig.M2));
+						System.out.println("\nUser Authentication STEP3 request\n---------------------------------------------");
+						srp6ClientSession.step3(m2);
+						System.out.println("Authentication completed, encryption key on Client:" + srp6ClientSession.getSessionKey().toString());
+					}
+				}
+			}
 		} catch (JSONException | SRP6Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	public JSONObject sendHttpRequest(String endPoint, String method, Map<String, String> headers, JSONObject requestBody){
 		JSONObject responseJson = null;
@@ -110,17 +112,30 @@ public class SRPClient {
 			HttpClient httpClient = HttpClientBuilder.create().build();
 			if(method.equalsIgnoreCase("POST")){
 				HttpPost request = new HttpPost(endPoint);
+				System.out.println("***********\nRequest:\n***********");
+				System.out.println(method + " " + endPoint + " HTTP/1.1");
 				Iterator<String> headersIter = headers.keySet().iterator();
 				while(headersIter.hasNext()){
 					String headerName = headersIter.next();
 					String headerValue = headers.get(headerName);
 					request.addHeader(headerName, headerValue);
+					System.out.println(headerName + ": " + headerValue);
 				}
 				StringEntity jsonEntity = new StringEntity(requestBody.toString(4), ContentType.APPLICATION_FORM_URLENCODED);
 				request.setEntity(jsonEntity);
+				System.out.println("\n" + requestBody.toString(4));
+				
 				HttpResponse response = httpClient.execute(request);
-				if(response.getStatusLine().getStatusCode() == 200){
-					responseJson = getJsonFromInputStream(response.getEntity().getContent());
+				System.out.println("\n***********\nResponse:\n***********");
+				System.out.println(response.getStatusLine().getProtocolVersion() + " " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
+				Header[] responseHeaders = response.getAllHeaders();
+				for(Header header : responseHeaders){
+					System.out.println(header.getName() + ": " + header.getValue());
+				}
+				System.out.println("");
+				responseJson = getJsonFromInputStream(response.getEntity().getContent());
+				if(null != responseJson){
+					System.out.println(responseJson.toString(4).trim());
 				}
 			}
 		} catch (UnsupportedCharsetException | JSONException | IOException e) {
@@ -143,7 +158,7 @@ public class SRPClient {
 			String string = result.toString("UTF-8");
 			json = new JSONObject(string);
 		} catch (IOException | JSONException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return json;
 	}
