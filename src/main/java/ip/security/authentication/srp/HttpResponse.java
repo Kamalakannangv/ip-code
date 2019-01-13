@@ -1,7 +1,7 @@
 package ip.security.authentication.srp;
 
 public class HttpResponse extends HttpObject {
-	
+
 	private Integer httpStatusCode;
 	private String httpStatusDesc;
 
@@ -17,6 +17,6 @@ public class HttpResponse extends HttpObject {
 	public String getHttpStatusDesc() {
 		return httpStatusDesc;
 	}
-	
+
 
 }

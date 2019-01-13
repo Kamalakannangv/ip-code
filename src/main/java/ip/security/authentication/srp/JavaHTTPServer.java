@@ -16,7 +16,6 @@ public class JavaHTTPServer implements Runnable{
 
 	private static final int PORT = 9876;
 
-	// Client Connection via Socket Class
 	private Socket socket;
 	private SRPServer srpServer;
 
@@ -29,19 +28,18 @@ public class JavaHTTPServer implements Runnable{
 		try(
 				ServerSocket serverConnect = new ServerSocket(PORT);	
 				) {
-			System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
+			System.out.println("Server started and listening to port : " + PORT + "\n");
 
-			// we listen until user halts server execution
+			// Infinite loop till the server(this program) is stopped
 			while (true) {
 				JavaHTTPServer myServer = new JavaHTTPServer(serverConnect.accept());
-
-				// create dedicated thread to manage each client connection
+				// one thread for one request from client
 				Thread thread = new Thread(myServer);
 				thread.start();
 			}
 
 		} catch (IOException e) {
-			System.err.println("Server Connection error : " + e.getMessage());
+			System.err.println("Error in server connection : " + e.getMessage());
 		}
 	}
 

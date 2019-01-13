@@ -6,12 +6,12 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public class HttpObject {
-	
+
 	private Map<String, String> headers = new HashMap<>();
 	private StringBuilder requestBody = new StringBuilder();
-	
+
 	private JSONObject jsonBody;
-	
+
 	public StringBuilder getRequestBody() {
 		return requestBody;
 	}
@@ -31,5 +31,5 @@ public class HttpObject {
 	public void setJsonBody(JSONObject jsonBody) {
 		this.jsonBody = jsonBody;
 	}
-	
+
 }

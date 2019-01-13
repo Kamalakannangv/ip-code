@@ -25,9 +25,9 @@ import com.nimbusds.srp6.SRP6Exception;
 import com.nimbusds.srp6.SRP6VerifierGenerator;
 
 public class SRPClient {
-	
+
 	private static final String SERVER_URL = "http://localhost:9876";
-	
+
 	public void registerUser(String username, String password){
 
 		// Create verifier generator
@@ -53,10 +53,8 @@ public class SRPClient {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
+
 	public void authenticate(String username, String password){
 		try {
 			Map<String, String> headers = null;
@@ -70,7 +68,7 @@ public class SRPClient {
 			headers.put(SRPConfig.HEADER_CONTENT_TYPE, "application/json");
 			headers.put(SRPConfig.HEADER_USER_AGENT, "Java Client");
 			headers.put(SRPConfig.HEADER_AUTH_STEP, AuthenticationStep.STEP1.toString());
-			
+
 			userAuthReqBody = new JSONObject();
 			userAuthReqBody.put(SRPConfig.USERNAME, username);
 			System.out.println("\nUser Authentication STEP1 request\n---------------------------------------------");
@@ -105,7 +103,7 @@ public class SRPClient {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public JSONObject sendHttpRequest(String endPoint, String method, Map<String, String> headers, JSONObject requestBody){
 		JSONObject responseJson = null;
 		try {
@@ -124,7 +122,7 @@ public class SRPClient {
 				StringEntity jsonEntity = new StringEntity(requestBody.toString(4), ContentType.APPLICATION_FORM_URLENCODED);
 				request.setEntity(jsonEntity);
 				System.out.println("\n" + requestBody.toString(4));
-				
+
 				HttpResponse response = httpClient.execute(request);
 				System.out.println("\n***********\nResponse:\n***********");
 				System.out.println(response.getStatusLine().getProtocolVersion() + " " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
@@ -142,10 +140,8 @@ public class SRPClient {
 			e.printStackTrace();
 		}
 		return responseJson;
-
 	}
-	
-	
+
 	private JSONObject getJsonFromInputStream(InputStream inputStream){
 		JSONObject json = null;
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
@@ -153,7 +149,7 @@ public class SRPClient {
 		int length;
 		try {
 			while ((length = inputStream.read(buffer)) != -1) {
-			    result.write(buffer, 0, length);
+				result.write(buffer, 0, length);
 			}
 			String string = result.toString("UTF-8");
 			json = new JSONObject(string);
@@ -162,5 +158,5 @@ public class SRPClient {
 		}
 		return json;
 	}
-	
+
 }

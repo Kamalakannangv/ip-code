@@ -6,9 +6,9 @@ public class UserClient {
 
 	public static void main(String[] args) {
 		UserClient user = new UserClient();
-		user.register("Kamal", "KitchMidhu");
-		user.authenticate("Kamal", "KitchMidhu");
-		user.authenticate("Kamal", "KitchuMidh");
+		user.register("gkamalakanna@csc.com", "ABcd56&*");
+		user.authenticate("gkamalakanna@csc.com", "ABcd56&*");
+		//user.authenticate("Kamal", "KitchuMidh");
 	}
 
 	public void register(String username, String password){

@@ -98,7 +98,7 @@ public class SRPServer {
 		}
 		return response;
 	}
-	
+
 	private HttpResponse buildResponse(int statusCode, String statusMsg, Map<String, String> headers, Map<String, String> responseAttributes){
 		HttpResponse response = new HttpResponse(statusCode, statusMsg);
 		try{
@@ -125,18 +125,18 @@ public class SRPServer {
 
 	private String getRandomString(){
 		int leftLimit = 97; // letter 'a'
-	    int rightLimit = 122; // letter 'z'
-	    int targetStringLength = 30;
-	    Random random = new Random();
-	    StringBuilder buffer = new StringBuilder(targetStringLength);
-	    for (int i = 0; i < targetStringLength; i++) {
-	        int randomLimitedInt = leftLimit + (int) 
-	          (random.nextFloat() * (rightLimit - leftLimit + 1));
-	        buffer.append((char) randomLimitedInt);
-	    }
-	    return buffer.toString();
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 30;
+		Random random = new Random();
+		StringBuilder buffer = new StringBuilder(targetStringLength);
+		for (int i = 0; i < targetStringLength; i++) {
+			int randomLimitedInt = leftLimit + (int) 
+					(random.nextFloat() * (rightLimit - leftLimit + 1));
+			buffer.append((char) randomLimitedInt);
+		}
+		return buffer.toString();
 	}
-	
+
 
 	public void registerUser(User newUser){
 
