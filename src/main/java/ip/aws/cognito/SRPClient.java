@@ -11,76 +11,47 @@ import java.util.Arrays;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public class SRPClientUtil {
+public class SRPClient {
 
 	private static final Charset UTF8_CHARSET = Charset.forName("UTF8");
-	private final byte[] EMPTY_ARRAY = new byte[0];
 	private static final int HKDF_DERIVED_KEY_SIZE = 16;
 	private static final String HKDF_DERIVED_KEY_INFO = "Caldera Derived Key"; //Amazon Cognito specific
 	private static final String SRP_HASH_ALGORITHM = "SHA-256";
 	private static final int CLIENT_RANDOM_NUM_KEY_LENGTH = 2048; 
 	private static final String PRNG_ALGORITHM = "SHA1PRNG";
-	private static final String PRIME_NUMBER_N_HEX =
-			"FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1"
-					+ "29024E088A67CC74020BBEA63B139B22514A08798E3404DD"
-					+ "EF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245"
-					+ "E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7ED"
-					+ "EE386BFB5A899FA5AE9F24117C4B1FE649286651ECE45B3D"
-					+ "C2007CB8A163BF0598DA48361C55D39A69163FA8FD24CF5F"
-					+ "83655D23DCA3AD961C62F356208552BB9ED529077096966D"
-					+ "670C354E4ABC9804F1746C08CA18217C32905E462E36CE3B"
-					+ "E39E772C180E86039B2783A2EC07A28FB5C55DF06F4C52C9"
-					+ "DE2BCBF6955817183995497CEA956AE515D2261898FA0510"
-					+ "15728E5A8AAAC42DAD33170D04507A33A85521ABDF1CBA64"
-					+ "ECFB850458DBEF0A8AEA71575D060C7DB3970F85A6E1E4C7"
-					+ "ABF5AE8CDB0933D71E8C94E04A25619DCEE3D2261AD2EE6B"
-					+ "F12FFA06D98A0864D87602733EC86A64521F2B18177B200C"
-					+ "BBE117577A615D6C770988C0BAD946E208E24FA074E5AB31"
-					+ "43DB5BFCE0FD108E4B82D120A93AD2CAFFFFFFFFFFFFFFFF";
-	private static final BigInteger N = new BigInteger(PRIME_NUMBER_N_HEX, 16);
+	private static final BigInteger N = new BigInteger("5809605995369958062791915965639201402176612226902900533702900882779736177890990861472094774477339581147373410185646378328043729800750470098210924487866935059164371588168047540943981644516632755067501626434556398193186628990071248660819361205119793693985433297036118232914410171876807536457391277857011849897410207519105333355801121109356897459426271845471397952675959440793493071628394122780510124618488232602464649876850458861245784240929258426287699705312584509625419513463605155428017165714465363094021609290561084025893662561222573202082865797821865270991145082200656978177192827024538990239969175546190770645685893438011714430426409338676314743571154537142031573004276428701433036381801705308659830751190352946025482059931306571004727362479688415574702596946457770284148435989129632853918392117997472632693078113129886487399347796982772784615865232621289656944284216824611318709764535152507354116344703769998514148343807");
 	private static final BigInteger g = BigInteger.valueOf(2);
-	private static final BigInteger k;
 
-	private static final ThreadLocal<MessageDigest> THREAD_MESSAGE_DIGEST =
-			new ThreadLocal<MessageDigest>() {
-		@Override
-		protected MessageDigest initialValue() {
-			try {
-				return MessageDigest.getInstance(SRP_HASH_ALGORITHM);
-			} catch (NoSuchAlgorithmException e) {
-				throw new SecurityException("Exception in authentication", e);
-			}
-		}
-	};
-	private static final SecureRandom SECURE_RANDOM;
+	private MessageDigest messageDigest;
+	private BigInteger a;
+	private BigInteger A;
+	private BigInteger k;
+	private String hmacAlgorithm;
 
-	static {
+	private final byte[] EMPTY_ARRAY = new byte[0];
+
+	public SRPClient(String hmacAlgorithm){
+		this.hmacAlgorithm = hmacAlgorithm;
+		init();
+	}
+
+	private void init(){
 		try {
-			SECURE_RANDOM = SecureRandom.getInstance(PRNG_ALGORITHM);
-			MessageDigest messageDigest = THREAD_MESSAGE_DIGEST.get();
+			SecureRandom secureRandom = SecureRandom.getInstance(PRNG_ALGORITHM);
+			messageDigest = MessageDigest.getInstance(SRP_HASH_ALGORITHM);
 			messageDigest.reset();
 			messageDigest.update(N.toByteArray());
 			byte[] digest = messageDigest.digest(g.toByteArray());
 			k = new BigInteger(1, digest);
+
+			do {
+				a = new BigInteger(CLIENT_RANDOM_NUM_KEY_LENGTH, secureRandom).mod(N);
+				A = g.modPow(a, N);
+			} while (A.mod(N).equals(BigInteger.ZERO));
+
 		} catch (NoSuchAlgorithmException e) {
 			throw new SecurityException(e.getMessage(), e);
 		}
-	}
-
-	private BigInteger a;
-	private BigInteger A;
-	private String hmacAlgorithm;
-
-	public SRPClientUtil(String hmacAlgorithm){
-		this.hmacAlgorithm = hmacAlgorithm;
-		generateA();
-	}
-
-	private void generateA(){
-		do {
-			a = new BigInteger(CLIENT_RANDOM_NUM_KEY_LENGTH, SECURE_RANDOM).mod(N);
-			A = g.modPow(a, N);
-		} while (A.mod(N).equals(BigInteger.ZERO));
 	}
 
 	public BigInteger getA(){
@@ -93,7 +64,6 @@ public class SRPClientUtil {
 		}
 
 		// u = H(A, B)
-		MessageDigest messageDigest = THREAD_MESSAGE_DIGEST.get();
 		messageDigest.reset();
 		messageDigest.update(A.toByteArray());
 		BigInteger u = new BigInteger(1, messageDigest.digest(B.toByteArray()));

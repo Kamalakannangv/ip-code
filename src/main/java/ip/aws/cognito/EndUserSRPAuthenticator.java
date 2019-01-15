@@ -31,10 +31,10 @@ public class EndUserSRPAuthenticator {
 	private static final String HMAC_ALGORITHM = "HmacSHA256";
 	private static final Charset UTF8_CHARSET = Charset.forName("UTF8");
 
-	private SRPClientUtil srpClientUtil;
+	private SRPClient srpClientUtil;
 
 	public EndUserSRPAuthenticator(){
-		srpClientUtil = new SRPClientUtil(HMAC_ALGORITHM);
+		srpClientUtil = new SRPClient(HMAC_ALGORITHM);
 	}
 
 	public static void main(String[] args) {
