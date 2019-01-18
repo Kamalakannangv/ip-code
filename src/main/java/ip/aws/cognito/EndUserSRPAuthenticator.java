@@ -30,11 +30,16 @@ public class EndUserSRPAuthenticator {
 	private static final int radix = 16;
 	private static final String HMAC_ALGORITHM = "HmacSHA256";
 	private static final Charset UTF8_CHARSET = Charset.forName("UTF8");
-
-	private SRPClient srpClientUtil;
+	private static final SimpleDateFormat timeStampFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
+	
+	static{
+		timeStampFormat.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+	}
+	
+	private SRPClient sprClient;
 
 	public EndUserSRPAuthenticator(){
-		srpClientUtil = new SRPClient(HMAC_ALGORITHM);
+		sprClient = new SRPClient(HMAC_ALGORITHM);
 	}
 
 	public static void main(String[] args) {
@@ -126,7 +131,7 @@ public class EndUserSRPAuthenticator {
 			initiateAuthRequest.addAuthParametersEntry(CommonUtility.SECRET_HASH, CommonUtility.getInstance().getSecretHash(Inputs.APP_CLIENT_ID,Inputs.APP_CLIENT_SECRET, username));
 		}
 		initiateAuthRequest.addAuthParametersEntry(CommonUtility.USERNAME, username);
-		initiateAuthRequest.addAuthParametersEntry(CommonUtility.SRP_A, srpClientUtil.getA().toString(radix));
+		initiateAuthRequest.addAuthParametersEntry(CommonUtility.SRP_A, sprClient.getA().toString(radix));
 		return initiateAuthRequest;
 	}
 
@@ -135,7 +140,7 @@ public class EndUserSRPAuthenticator {
 		String username = challenge.getChallengeParameters().get(CommonUtility.USERNAME);
 		BigInteger B = new BigInteger(challenge.getChallengeParameters().get(CommonUtility.SRP_B), radix);
 		BigInteger salt = new BigInteger(challenge.getChallengeParameters().get(CommonUtility.SRP_SALT), radix);
-		byte[] srpAuthKey = srpClientUtil.getSRPAuthenticationKey(userIdForSRP, password, B, salt);
+		byte[] srpAuthKey = sprClient.getSRPAuthenticationKey(userIdForSRP, password, B, salt);
 		Date timestamp = new Date();
 		byte[] hmac = null;
 		try {
@@ -146,20 +151,17 @@ public class EndUserSRPAuthenticator {
 			mac.update(userIdForSRP.getBytes(UTF8_CHARSET));
 			byte[] secretBlock = Base64.decode(challenge.getChallengeParameters().get(CommonUtility.SRP_SECRET_BLOCK));
 			mac.update(secretBlock);
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
-			simpleDateFormat.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
-			String dateString = simpleDateFormat.format(timestamp);
+			String dateString = timeStampFormat.format(timestamp);
 			byte[] dateBytes = dateString.getBytes(UTF8_CHARSET);
 			hmac = mac.doFinal(dateBytes);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		SimpleDateFormat formatTimestamp = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
-		formatTimestamp.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+		
 		Map<String, String> srpAuthResponses = new HashMap<>();
 		srpAuthResponses.put(CommonUtility.SRP_PASSWORD_CLAIM_SECRET_BLOCK, challenge.getChallengeParameters().get("SECRET_BLOCK"));
 		srpAuthResponses.put(CommonUtility.SRP_PASSWORD_CLAIM_SIGNATURE, new String(Base64.encode(hmac), UTF8_CHARSET));
-		srpAuthResponses.put(CommonUtility.TIMESTAMP, formatTimestamp.format(timestamp));
+		srpAuthResponses.put(CommonUtility.TIMESTAMP, timeStampFormat.format(timestamp));
 		srpAuthResponses.put(CommonUtility.USERNAME, username);
 		if(Inputs.IS_APP_CLIENT_HAS_SECRET){
 			srpAuthResponses.put(CommonUtility.SECRET_HASH, CommonUtility.getInstance().getSecretHash(Inputs.APP_CLIENT_ID,Inputs.APP_CLIENT_SECRET, username));
