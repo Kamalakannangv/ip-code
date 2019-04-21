@@ -156,9 +156,25 @@ public class CommonUtility {
 			byte[] rawHmac = mac.doFinal(userPoolClientId.getBytes(StandardCharsets.UTF_8));
 			return java.util.Base64.getEncoder().encodeToString(rawHmac);
 		} catch (Exception e) {
-			throw new RuntimeException("Error while calculating ");
+			throw new RuntimeException("Error while hashing secret ");
 		}
 	}
+	
+	
+	public String createSecretHash(String userPoolClientId, String userPoolClientSecret, String userName) {
+		String hmacAlgorithm = "HmacSHA256";
+		try {
+			Mac mac = Mac.getInstance(hmacAlgorithm);
+			SecretKeySpec signingKey = new SecretKeySpec(userPoolClientSecret.getBytes(StandardCharsets.UTF_8), hmacAlgorithm);
+			mac.init(signingKey);
+			mac.update(userName.getBytes(StandardCharsets.UTF_8));
+			byte[] rawHmac = mac.doFinal(userPoolClientId.getBytes(StandardCharsets.UTF_8));
+			return java.util.Base64.getEncoder().encodeToString(rawHmac);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while hashing secret ");
+		}
+	}
+	
 
 	public void display(String str, String header){
 
