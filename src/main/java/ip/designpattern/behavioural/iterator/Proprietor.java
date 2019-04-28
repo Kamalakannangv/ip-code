@@ -1,6 +1,5 @@
-package ip.designpattern.structural.composite;
+package ip.designpattern.behavioural.iterator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Proprietor implements ComponentAddress {
@@ -35,15 +34,11 @@ public class Proprietor implements ComponentAddress {
 
 	@Override
 	public String getAddress() {
-		List<Integer> columnLength = new ArrayList<>();
-		columnLength.add(8);
-		columnLength.add(30);
-		List<Object> addressValue = new ArrayList<>();
-		addressValue.add(AddressComponentEnum.PROPRIETOR.getValue());
-		addressValue.add(proprietorName);
-		List<List<Object>> data = new ArrayList<>();
-		data.add(addressValue);
-		return DisplayUtil.getFormattedString(columnLength, data);
+		StringBuffer address = new StringBuffer(AddressComponentEnum.PROPRIETOR.getValue() + ": " + proprietorName);
+		if(getParentComponentAddress() != null){
+			address.append(", " +getParentComponentAddress().getAddress());
+		}
+		return address.toString() ;
 	}
 
 	@Override
@@ -66,5 +61,40 @@ public class Proprietor implements ComponentAddress {
 	public List<ComponentAddress> getChildAddressComponents() {
 		return null;
 	}
+
+	@Override
+	public ComponentAddress getLeftLeafComponentAddress() {
+		return this;
+	}
+
+	@Override
+	public ComponentAddress getRigthSibling() {
+		List<ComponentAddress> siblings = getParentComponentAddress().getChildAddressComponents();
+		int siblingIndex = getRightSiblingIndex();
+		if(siblings.size() > siblingIndex){
+			return siblings.get(siblingIndex);
+		}else{
+			return null;
+		}
+	}
+
+	@Override
+	public boolean hasRightSibling() {
+		List<ComponentAddress> siblings = getParentComponentAddress().getChildAddressComponents();
+		int siblingIndex = getRightSiblingIndex();
+		return siblings.size() > siblingIndex ;
+	}
+	
+	private int getRightSiblingIndex(){
+		List<ComponentAddress> siblings = getParentComponentAddress().getChildAddressComponents();
+		int siblingIndex;
+		for(siblingIndex = 0; siblingIndex < siblings.size(); siblingIndex++){
+			if(this == siblings.get(siblingIndex)){
+				break;
+			}
+		}
+		return ++siblingIndex;
+	}
+	
 
 }

@@ -1,6 +1,6 @@
 package ip.designpattern.structural.composite;
 
-public enum AddressComponent {
+public enum AddressComponentEnum {
 	
 	PROPRIETOR("Mr/Mrs. "),
 	DOORNO("No. "),
@@ -14,7 +14,7 @@ public enum AddressComponent {
 	
 	private String componentName;
 	
-	private AddressComponent(String componentName){
+	private AddressComponentEnum(String componentName){
 		this.componentName = componentName;
 	}
 	

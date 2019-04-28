@@ -1,4 +1,4 @@
-package ip.designpattern.structural.composite;
+package ip.designpattern.behavioural.iterator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +43,11 @@ public class CompositeAddress implements ComponentAddress {
 	
 	@Override
 	public String getAddress() {
-		List<Integer> columnLength = new ArrayList<>();
-		columnLength.add(10);
-		columnLength.add(3);
-		columnLength.add(30);
-		List<Object> addressValue = new ArrayList<>();
-		addressValue.add(addressComponent.getValue());
-		addressValue.add(" : ");
-		addressValue.add(addressComponentValue);
-		List<List<Object>> data = new ArrayList<>();
-		data.add(addressValue);
-		return DisplayUtil.getFormattedString(columnLength, data);
+		StringBuffer address = new StringBuffer(addressComponent.getValue()+": " + addressComponentValue);
+		if(getParentComponentAddress() != null){
+			address.append(", " + getParentComponentAddress().getAddress());
+		}
+		return address.toString() ;
 	}
 
 	@Override
@@ -71,6 +65,48 @@ public class CompositeAddress implements ComponentAddress {
 	@Override
 	public String toString() {
 		return addressComponent.getValue() + " : " + addressComponentValue;
+	}
+
+	@Override
+	public ComponentAddress getLeftLeafComponentAddress() {
+		if(childAddressComponents.size() > 0){
+			return childAddressComponents.get(0).getLeftLeafComponentAddress();
+		}
+		return null;
+	}
+
+	@Override
+	public ComponentAddress getRigthSibling() {
+		List<ComponentAddress> siblings = null;
+		int siblingIndex = getRightSiblingIndex();
+		if(siblingIndex > 0 && siblingIndex < (siblings = getParentComponentAddress().getChildAddressComponents()).size()){
+			return siblings.get(siblingIndex);
+		}else{
+			return null;
+		}
+	}
+
+	@Override
+	public boolean hasRightSibling() {
+		int siblingIndex = getRightSiblingIndex();
+		return siblingIndex > 0 && siblingIndex < (getParentComponentAddress().getChildAddressComponents()).size() ;
+	}
+	
+	private int getRightSiblingIndex(){
+		ComponentAddress parentComponentAddress = getParentComponentAddress();
+		if(null == parentComponentAddress){
+			return -1;
+		}else{
+			List<ComponentAddress> siblings = parentComponentAddress.getChildAddressComponents();
+			int siblingIndex;
+			for(siblingIndex = 0; siblingIndex < siblings.size(); siblingIndex++){
+				if(this == siblings.get(siblingIndex)){
+					break;
+				}
+			}
+			return ++siblingIndex;
+		}
+		
 	}
 
 }

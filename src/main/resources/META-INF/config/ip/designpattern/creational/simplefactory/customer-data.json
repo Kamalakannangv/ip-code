@@ -1,0 +1,10 @@
+{
+	"customer-id": 123,
+	"salutation" : "Mr.",
+	"first-name" : "Kishanthan",
+	"last-name"  : "K",
+	"short-name" : "Kitchu",
+	"mobile"	 : 987654321,
+	"email-id"	 : "kishanth.kamal@gmail.com"
+	"address"	 : "Guduvancherry,Chennai"
+}

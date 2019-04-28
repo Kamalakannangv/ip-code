@@ -1,4 +1,4 @@
-package ip.designpattern.structural.composite;
+package ip.designpattern.behavioural.iterator;
 
 import java.util.List;
 
@@ -15,5 +15,11 @@ public interface ComponentAddress {
 	public List<ComponentAddress> getChildAddressComponents();
 	
 	public String getAddress();
+	
+	public ComponentAddress getLeftLeafComponentAddress();
+	
+	public boolean hasRightSibling();
+	
+	public ComponentAddress getRigthSibling();
 	
 }

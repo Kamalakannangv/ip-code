@@ -13,7 +13,7 @@ public class CompositeMainClass {
 
 	private static final String csvAddressFilePath = "/META-INF/config/ip/designpattern/structural/composite/addresses.csv";
 	
-	private List<CompositeAddress> addressDirectory = new ArrayList<>();
+	private List<ComponentAddress> addressDirectory = new ArrayList<>();
 	private List<Proprietor> proprietorAddresses = new ArrayList<>();
 
 	public static void main(String[] args) {
@@ -26,9 +26,9 @@ public class CompositeMainClass {
 		}
 		
 		//Get all address and print together
-		Iterator<CompositeAddress> addressDirectoryIter = compositeClient.addressDirectory.iterator();
+		Iterator<ComponentAddress> addressDirectoryIter = compositeClient.addressDirectory.iterator();
 		while(addressDirectoryIter.hasNext()){
-			CompositeAddress rootAddress = addressDirectoryIter.next();
+			ComponentAddress rootAddress = addressDirectoryIter.next();
 			List<String> completeAddressList = compositeClient.getAllAddresses(rootAddress);
 			for(String addressLines : completeAddressList){
 				System.out.println(addressLines + "\n");
@@ -43,30 +43,30 @@ public class CompositeMainClass {
 				BufferedReader bf = new BufferedReader(fileReader);
 				){
 			String line = null;
-			List<AddressComponent> headers = new ArrayList<>();
+			List<AddressComponentEnum> headers = new ArrayList<>();
 			boolean headerFilled = false;	
 			while((line = bf.readLine()) != null){
 				if(headerFilled){
 					String[] valuesArr = line.split(",");
-					CompositeAddress parentAddress = null;
+					ComponentAddress parentAddress = null;
 					for(int i = valuesArr.length-1; i >= 0; i--){
-						AddressComponent addressComponent = headers.get(i);
+						AddressComponentEnum addressComponent = headers.get(i);
 						String addressValue = valuesArr[i];
 						if(null == parentAddress){
-							for(CompositeAddress rootAddress : addressDirectory){
+							for(ComponentAddress rootAddress : addressDirectory){
 								if(rootAddress.getAddressComponent() == addressComponent && addressValue.equals(rootAddress.getAddressComponentValue())){
 									parentAddress = rootAddress;
 									break;
 								}
 							}
 							if(null == parentAddress){
-								parentAddress = new ComponentAddress(addressComponent, addressValue);
+								parentAddress = new CompositeAddress(addressComponent, addressValue);
 								addressDirectory.add(parentAddress);
 							}
 						}else{
-							List<CompositeAddress> childAddreses = parentAddress.getChildAddressComponents();
-							CompositeAddress matchedChildAddress = null;
-							for(CompositeAddress childAddress : childAddreses){
+							List<ComponentAddress> childAddreses = parentAddress.getChildAddressComponents();
+							ComponentAddress matchedChildAddress = null;
+							for(ComponentAddress childAddress : childAddreses){
 								if(childAddress.getAddressComponent() == addressComponent && addressValue.equals(childAddress.getAddressComponentValue())){
 									matchedChildAddress = childAddress;
 									break;
@@ -78,9 +78,9 @@ public class CompositeMainClass {
 									proprietorAddresses.add(proprietor);
 									matchedChildAddress = proprietor;
 								}else{
-									matchedChildAddress = new ComponentAddress(addressComponent, addressValue);
+									matchedChildAddress = new CompositeAddress(addressComponent, addressValue);
 								}
-								matchedChildAddress.setParentCompositeAddress(parentAddress);
+								matchedChildAddress.setParentComponentAddress(parentAddress);
 							}
 							parentAddress = matchedChildAddress;
 						}
@@ -88,7 +88,7 @@ public class CompositeMainClass {
 				}else{
 					String[] headersArr = line.split(",");
 					for(String hrd : headersArr){
-						headers.add(AddressComponent.valueOf(hrd));
+						headers.add(AddressComponentEnum.valueOf(hrd));
 					}
 					headerFilled = true;
 				}
@@ -100,7 +100,7 @@ public class CompositeMainClass {
 		} 
 	}
 
-	private List<String> getAllAddresses(CompositeAddress compositeAddress, List<String>... addressLinesVarArg){
+	private List<String> getAllAddresses(ComponentAddress compositeAddress, List<String>... addressLinesVarArg){
 		List<String> addressLines = null;
 		if(addressLinesVarArg.length == 1){
 			addressLines = addressLinesVarArg[0];
@@ -110,10 +110,10 @@ public class CompositeMainClass {
 		List<String> completeAddresses = null;
 		String addressStr = compositeAddress.getAddress();
 		addressLines.add(addressStr);
-		List<CompositeAddress> childAddresses = compositeAddress.getChildAddressComponents();
+		List<ComponentAddress> childAddresses = compositeAddress.getChildAddressComponents();
 		if(null != childAddresses && childAddresses.size() > 0){
 			completeAddresses = new ArrayList<>();
-			for(CompositeAddress childAddress : childAddresses){
+			for(ComponentAddress childAddress : childAddresses){
 				List<String> childAddressLines = new ArrayList<>();
 				for(String addressLine : addressLines){
 					childAddressLines.add(addressLine);
@@ -132,11 +132,11 @@ public class CompositeMainClass {
 		return completeAddresses;
 	}
 	
-	private boolean isCompositeAddressEqual(CompositeAddress address1, CompositeAddress address2){
+	private boolean isCompositeAddressEqual(ComponentAddress address1, ComponentAddress address2){
 		if(null != address1 && null != address2){
 			if(address1.equals(address2)){
-				CompositeAddress parent1 = address1.getParentCompositeAddress();
-				CompositeAddress parent2 = address2.getParentCompositeAddress();
+				ComponentAddress parent1 = address1.getParentComponentAddress();
+				ComponentAddress parent2 = address2.getParentComponentAddress();
 				if(parent1 == null && parent2 == null){
 					return true;
 				}else{
@@ -148,11 +148,11 @@ public class CompositeMainClass {
 	}
 	
 	
-	private void printAddress(CompositeAddress compositeAddress){
-		CompositeAddress address = compositeAddress;
+	private void printAddress(ComponentAddress compositeAddress){
+		ComponentAddress address = compositeAddress;
 		while(address != null){
 			System.out.println(address.getAddress());
-			address = address.getParentCompositeAddress();
+			address = address.getParentComponentAddress();
 		}
 	}
 
