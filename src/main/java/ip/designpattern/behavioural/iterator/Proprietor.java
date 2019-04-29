@@ -12,7 +12,7 @@ public class Proprietor implements ComponentAddress {
 	}
 
 	@Override
-	public AddressComponentEnum getAddressComponent() {
+	public AddressComponentEnum getAddressComponentEnum() {
 		return AddressComponentEnum.PROPRIETOR;
 	}
 
@@ -29,7 +29,7 @@ public class Proprietor implements ComponentAddress {
 	@Override
 	public void setParentComponentAddress(ComponentAddress parentCompositeAddress) {
 		this.parentCompositeAddress = parentCompositeAddress;
-		parentCompositeAddress.getChildAddressComponents().add(this);
+		//parentCompositeAddress.getChildAddressComponents().add(this);
 	}
 
 	@Override

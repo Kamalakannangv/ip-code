@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ComponentAddress {
 	
-	public AddressComponentEnum getAddressComponent();
+	public AddressComponentEnum getAddressComponentEnum();
 	
 	public String getAddressComponentValue();
 	
@@ -14,6 +14,13 @@ public interface ComponentAddress {
 	
 	public List<ComponentAddress> getChildAddressComponents();
 	
+	public String getCompleteAddress();
+	
 	public String getAddress();
+	
+	public int getComponentAddressCount(AddressComponentEnum addressComponentEnum);
+	
+	public List<ComponentAddress> getComponentAddress(AddressComponentEnum addressComponentEnum);
+	
 	
 }

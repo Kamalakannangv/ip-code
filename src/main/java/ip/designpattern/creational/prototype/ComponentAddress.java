@@ -1,8 +1,9 @@
-package ip.designpattern.behavioural.iterator;
+package ip.designpattern.creational.prototype;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface ComponentAddress {
+public interface ComponentAddress extends Serializable{
 	
 	public AddressComponentEnum getAddressComponentEnum();
 	
@@ -14,12 +15,13 @@ public interface ComponentAddress {
 	
 	public List<ComponentAddress> getChildAddressComponents();
 	
+	public String getCompleteAddress();
+	
 	public String getAddress();
 	
-	public ComponentAddress getLeftLeafComponentAddress();
+	public int getComponentAddressCount(AddressComponentEnum addressComponentEnum);
 	
-	public boolean hasRightSibling();
+	public List<ComponentAddress> getComponentAddress(AddressComponentEnum addressComponentEnum);
 	
-	public ComponentAddress getRigthSibling();
 	
 }

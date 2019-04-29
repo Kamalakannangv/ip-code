@@ -1,4 +1,4 @@
-package ip.designpattern.behavioural.iterator;
+package ip.designpattern.structural.composite;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,10 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+public class AddressCollection{
 
-public class AddressCollection implements IterableAddress<ComponentAddress>{
-
-	private static final String csvAddressFilePath = "/META-INF/config/ip/designpattern/behavioural/iterator/addresses.csv";
+	private static final String csvAddressFilePath = "/META-INF/config/ip/designpattern/structural/composite/addresses.csv";
 	private List<ComponentAddress> componentAddressCollection = new ArrayList<>();
 	private ComponentAddress rootComponentAddress = null;
 
@@ -19,11 +18,45 @@ public class AddressCollection implements IterableAddress<ComponentAddress>{
 		rootComponentAddress = componentAddressCollection.get(0);
 	}
 
-	@Override
-	public AddressIterator<ComponentAddress> createIterator() {
-		return new AddressIterator<ComponentAddress>(rootComponentAddress);
+	public ComponentAddress getRootComponentAddress() {
+		return rootComponentAddress;
 	}
 
+	public void printAllState(ComponentAddress rootComponentAddress){
+		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.STATE);
+		System.out.println("All State List:");
+		System.out.println("***************");
+		for(ComponentAddress address : componentAddress){
+			System.out.println(address.getAddress());
+		}
+		System.out.println("\n");
+	}
+	
+	public void printAllDistrict(ComponentAddress rootComponentAddress){
+		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.DISTRICT);
+		System.out.println("All District List:");
+		System.out.println("******************");
+		for(ComponentAddress address : componentAddress){
+			System.out.println(address.getCompleteAddress());
+		}
+		System.out.println("\n");
+	}
+	
+	public void printAllStateAndDistrict(ComponentAddress rootComponentAddress){
+		System.out.println("All State and District List:");
+		System.out.println("****************************");
+		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.STATE);
+		for(ComponentAddress address : componentAddress){
+			System.out.println(address.getAddress());
+			List<ComponentAddress> componentDistrictAddress = address.getComponentAddress(AddressComponentEnum.DISTRICT);
+			for(ComponentAddress districtAddress : componentDistrictAddress){
+				System.out.println("\t" + districtAddress.getAddress());
+			}
+		}
+		System.out.println("\n");
+	}
+	
+	
 	private void loadAddressesFromCSV(){
 		try (
 				FileReader fileReader = new FileReader(AddressCollection.class.getResource(csvAddressFilePath).getFile());
@@ -55,7 +88,6 @@ public class AddressCollection implements IterableAddress<ComponentAddress>{
 							}
 							componentAddressCollection.add(componentAddress);
 							if(parentAddress != null){
-								//componentAddress.setParentComponentAddress(parentAddress);
 								((CompositeAddress)parentAddress).addComponentAddress(componentAddress);
 							}
 							parentAddress = componentAddress;
@@ -83,7 +115,7 @@ public class AddressCollection implements IterableAddress<ComponentAddress>{
 		for(ComponentAddress address : componentAddressCollection){
 			if(address.getAddressComponentEnum() == addressComponent 
 					&& address.getAddressComponentValue().equalsIgnoreCase(addressComponentName)
-					&& address.getAddress().equalsIgnoreCase(addressPath)){
+					&& address.getCompleteAddress().equalsIgnoreCase(addressPath)){
 				componentAddress = address;
 				break;
 			}
@@ -91,66 +123,4 @@ public class AddressCollection implements IterableAddress<ComponentAddress>{
 		return componentAddress;
 	}
 	
-	private class AddressIterator<E> implements Iterator<ComponentAddress> {
-
-		private ComponentAddress rootComponentAddress;
-		private ComponentAddress currentAddress;
-		
-		public AddressIterator(ComponentAddress rootComponentAddress) {
-			this.rootComponentAddress = rootComponentAddress;
-		}
-		
-		@Override
-		public boolean hasNext() {
-			if(null == currentAddress){
-				return (null != rootComponentAddress.getLeftLeafComponentAddress());
-			}else if(currentAddress.hasRightSibling()){
-				return true;
-			}else{
-				ComponentAddress parentComponentAddress = currentAddress.getParentComponentAddress();
-				while(parentComponentAddress != null){
-					if(parentComponentAddress.hasRightSibling() 
-						&& null != parentComponentAddress.getRigthSibling().getLeftLeafComponentAddress()){
-						return true;
-					}
-					parentComponentAddress = parentComponentAddress.getParentComponentAddress();
-				}
-				return false;
-			}
-		}
-
-		@Override
-		public ComponentAddress next() {
-			if(null == currentAddress){
-				currentAddress = rootComponentAddress.getLeftLeafComponentAddress();
-				return currentAddress;
-			}else if(currentAddress.hasRightSibling()){
-				currentAddress = currentAddress.getRigthSibling();
-				return currentAddress;
-			}else{
-				ComponentAddress parentComponentAddress = currentAddress.getParentComponentAddress();
-				while(parentComponentAddress != null){
-					if(parentComponentAddress.hasRightSibling()){
-						currentAddress = parentComponentAddress.getRigthSibling().getLeftLeafComponentAddress();
-						if(null == currentAddress){
-							currentAddress = parentComponentAddress.getRigthSibling();
-						}
-						if(null != currentAddress){
-							return currentAddress;
-						}
-					}
-					parentComponentAddress = parentComponentAddress.getParentComponentAddress();
-				}
-				currentAddress = null;
-			}
-			return currentAddress;
-		}
-
-		@Override
-		public ComponentAddress current() {
-			return currentAddress;
-		}
-		
-	}
-
 }

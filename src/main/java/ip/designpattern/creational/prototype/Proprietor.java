@@ -1,10 +1,12 @@
-package ip.designpattern.structural.composite;
+package ip.designpattern.creational.prototype;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Proprietor implements ComponentAddress {
 	
+	private static final long serialVersionUID = 3L;
+
 	private String proprietorName;
 	private ComponentAddress parentCompositeAddress;
 

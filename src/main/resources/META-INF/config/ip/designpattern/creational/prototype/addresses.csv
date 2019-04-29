@@ -1,0 +1,36 @@
+PROPRIETOR,DOORNO,STREET,VILLAGE,POST,TALUK,DISTRICT,STATE,COUNTRY
+AAA,1,1st street,Vayalure,Velure,Cheyyur,Kanchipuram,Tamil Nadu,India
+BBB,1,1st street,Vayalure,Velure,Cheyyur,Kanchipuram,Tamil Nadu,India
+CCC,1,3rd street,Thenneripettu,Velure,Cheyyur,Kanchipuram,Tamil Nadu,India
+DDD,4,4th street,Chunampedu,Chunampedu,Cheyyur,Kanchipuram,Tamil Nadu,India
+AAA,5,1st street,Chunampedu,Chunampedu,Cheyyur,Kanchipuram,Tamil Nadu,India
+BBB,6,2nd street,Chunampedu,Chunampedu,Cheyyur,Kanchipuram,Tamil Nadu,India
+CCC,7,3rd street,Chengalpet,Chengalpet,Chengalpet,Kanchipuram,Tamil Nadu,India
+DDD,8,4th street,Chengalpet,Chengalpet,Chengalpet,Kanchipuram,Tamil Nadu,India
+Kamalakannan. G,31/1,1st,Govindarajapuram,Nandhivaram,Guduvancherry,Kanchipuram,Tamil Nadu,India
+Saraus,31/1,1st,Govindarajapuram,Nandhivaram,Guduvancherry,Kanchipuram,Tamil Nadu,India
+Kishanthan. K,31/1,1st,Govindarajapuram,Nandhivaram,Guduvancherry,Kanchipuram,Tamil Nadu,India
+Midharshana. K,31/1,1st,Govindarajapuram,Nandhivaram,Guduvancherry,Kanchipuram,Tamil Nadu,India
+AAA,9,1st street,Parangani,Parangani,Vanur,Villupuram,Tamil Nadu,India
+BBB,10,2nd street,Parangani,Parangani,Vanur,Villupuram,Tamil Nadu,India
+CCC,11,3rd street,Parangani,Parangani,Vanur,Villupuram,Tamil Nadu,India
+DDD,12,4th street,Kudroad,Kudroad,Vanur,Villupuram,Tamil Nadu,India
+AAA,13,1st street,Kudroad,Kudroad,Vanur,Villupuram,Tamil Nadu,India
+BBB,14,2nd street,Tindivanam,Tindivanam,Tindivanam,Villupuram,Tamil Nadu,India
+CCC,15,3rd street,Tindivanam,Tindivanam,Tindivanam,Villupuram,Tamil Nadu,India
+DDD,16,1st street,Tindivanam,Tindivanam,Tindivanam,Villupuram,Tamil Nadu,India
+AAA,17,2nd street,Cudalore,Cudalore,Cudalore,Cudalore,Tamil Nadu,India
+BBB,18,3rd street,Cudalore,Cudalore,Cudalore,Cudalore,Tamil Nadu,India
+CCC,19,4th street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+DDD,11,1st street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+AAA,12,2nd street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+BBB,13,1st street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+CCC,14,2nd street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+DDD,15,3rd street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+AAA,16,4th street,Pondicherry,Pondicherry,Pondicherry,Pondicherry,Pondicherry,India
+BBB,17,1st street,Karaikal,Karaikal,Karaikal,Karaikal,Pondicherry,India
+CCC,18,2nd street,Karaikal,Karaikal,Karaikal,Karaikal,Pondicherry,India
+DDD,19,3rd street,Karaikal,Karaikal,Karaikal,Karaikal,Pondicherry,India
+AAA,20,4th street,Wayanad,Wayanad,Wayanad,Wayanad,Kerala,India
+BBB,21,1st street,Kollam,Kollam,Kollam,Kollam,Kerala,India
+CCC,22,2nd street,Wayanad,Wayanad,Wayanad,Wayanad,Kerala,India

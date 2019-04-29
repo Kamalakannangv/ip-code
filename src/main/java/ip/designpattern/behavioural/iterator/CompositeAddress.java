@@ -3,6 +3,8 @@ package ip.designpattern.behavioural.iterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import ip.designpattern.behavioural.iterator.ComponentAddress;
+
 public class CompositeAddress implements ComponentAddress {
 
 	private AddressComponentEnum addressComponent;
@@ -16,7 +18,7 @@ public class CompositeAddress implements ComponentAddress {
 	}
 	
 	@Override
-	public AddressComponentEnum getAddressComponent() {
+	public AddressComponentEnum getAddressComponentEnum() {
 		return addressComponent;
 	}
 
@@ -33,7 +35,7 @@ public class CompositeAddress implements ComponentAddress {
 	@Override
 	public void setParentComponentAddress(ComponentAddress parentCompositeAddress) {
 		this.parentCompositeAddress = parentCompositeAddress;
-		parentCompositeAddress.getChildAddressComponents().add(this);
+		//parentCompositeAddress.getChildAddressComponents().add(this);
 	}
 	
 	@Override
@@ -48,6 +50,20 @@ public class CompositeAddress implements ComponentAddress {
 			address.append(", " + getParentComponentAddress().getAddress());
 		}
 		return address.toString() ;
+	}
+	
+	public void addComponentAddress(ComponentAddress componentAddress){
+		childAddressComponents.add(componentAddress);
+		componentAddress.setParentComponentAddress(this);
+	}
+	
+	public boolean removeComponentAddress(ComponentAddress componentAddress){
+		boolean isCompAddrRemoved = childAddressComponents.remove(componentAddress);
+		if(isCompAddrRemoved){
+			componentAddress.setParentComponentAddress(null);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
