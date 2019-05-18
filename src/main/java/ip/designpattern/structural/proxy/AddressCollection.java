@@ -1,15 +1,17 @@
-package ip.designpattern.structural.composite;
+package ip.designpattern.structural.proxy;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class AddressCollection{
+public class AddressCollection implements AddressDirectory{
 
-	private static final String csvAddressFilePath = "/META-INF/config/ip/designpattern/structural/composite/addresses.csv";
+	private static final String csvAddressFilePath = "/META-INF/config/ip/designpattern/structural/proxy/addresses.csv";
 	private List<ComponentAddress> componentAddressCollection = new ArrayList<>();
 	private ComponentAddress rootComponentAddress = null;
 
@@ -22,42 +24,50 @@ public class AddressCollection{
 		return rootComponentAddress;
 	}
 
-	public void printAllState(){
+	@Override
+	public List<String> getAllState(){
+		System.out.println("Retrieving all state names...");
+		List<String> stateList = new ArrayList<>();
 		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.STATE);
-		System.out.println("All State List:");
-		System.out.println("***************");
 		for(ComponentAddress address : componentAddress){
-			System.out.println(address.getAddress());
+			stateList.add(address.getAddress());
 		}
-		System.out.println("\n");
+		System.out.println("All state names retrieved");
+		return stateList;
 	}
 	
-	public void printAllDistrict(){
+	@Override
+	public List<String> getAllDistrict(){
+		System.out.println("Retrieving all district names...");
+		List<String> districtList = new ArrayList<>();
 		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.DISTRICT);
-		System.out.println("All District List:");
-		System.out.println("******************");
 		for(ComponentAddress address : componentAddress){
-			System.out.println(address.getCompleteAddress());
+			districtList.add(address.getCompleteAddress());
 		}
-		System.out.println("\n");
+		System.out.println("All district names retrieved");
+		return districtList;
 	}
 	
-	public void printAllStateAndDistrict(){
-		System.out.println("All State and District List:");
-		System.out.println("****************************");
+	@Override
+	public Map<String, List<String>> getAllStateAndDistrict(){
+		System.out.println("Retrieving all state and district names...");
+		Map<String, List<String>> stateDistrictList = new HashMap<>();
 		List<ComponentAddress> componentAddress = rootComponentAddress.getComponentAddress(AddressComponentEnum.STATE);
 		for(ComponentAddress address : componentAddress){
-			System.out.println(address.getAddress());
+			List<String> districtList = new ArrayList<>();
 			List<ComponentAddress> componentDistrictAddress = address.getComponentAddress(AddressComponentEnum.DISTRICT);
 			for(ComponentAddress districtAddress : componentDistrictAddress){
-				System.out.println("\t" + districtAddress.getAddress());
+				districtList.add(districtAddress.getAddress());
 			}
+			stateDistrictList.put(address.getAddress(), districtList);
 		}
-		System.out.println("\n");
+		System.out.println("All state and district names retrieved");
+		return stateDistrictList;
 	}
 	
 	
 	private void loadAddressesFromCSV(){
+		System.out.println("Loading Address....");
 		try (
 				FileReader fileReader = new FileReader(AddressCollection.class.getResource(csvAddressFilePath).getFile());
 				BufferedReader bf = new BufferedReader(fileReader);
@@ -107,7 +117,8 @@ public class AddressCollection{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
+		System.out.println("Address loaded");
 	}
 	
 	private ComponentAddress getMatchingComponentAddress(AddressComponentEnum addressComponent, String addressComponentName, String addressPath){

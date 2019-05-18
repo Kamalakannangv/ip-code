@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="false" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="ip.designpattern.structural.proxy.AddressDirectory" project="ip-code" 
+    file="/ip-code/src/main/java/ip/designpattern/structural/proxy/AddressDirectory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="649" y="101"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="true" package="false" protected="true" private="false" static="false"/>      
+      <operations public="true" package="false" protected="true" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="2" language="java" name="ip.designpattern.structural.proxy.ProxyAddressDirectory" project="ip-code" 
+    file="/ip-code/src/main/java/ip/designpattern/structural/proxy/ProxyAddressDirectory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="497" y="337"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="true" package="false" protected="true" private="false" static="false"/>      
+      <operations public="true" package="false" protected="true" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="ip.designpattern.structural.proxy.AddressCollection" project="ip-code" 
+    file="/ip-code/src/main/java/ip/designpattern/structural/proxy/AddressCollection.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="902" y="335"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="true" package="false" protected="true" private="false" static="false"/>      
+      <operations public="true" package="false" protected="true" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ip.designpattern.structural.proxy.ProxyMainClass" project="ip-code" 
+    file="/ip-code/src/main/java/ip/designpattern/structural/proxy/ProxyMainClass.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="208" y="99"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="false">      
+      <attributes public="true" package="false" protected="true" private="false" static="false"/>      
+      <operations public="true" package="false" protected="true" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <dependency id="5">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="6">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="7" name="addressCollection"/>      
+      <multiplicity id="8" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="false"/>  
+  </association>  
+  <realization id="9">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <dependency id="10">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <realization id="11">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="false">    
+    <attributes public="true" package="false" protected="true" private="false" static="false"/>    
+    <operations public="true" package="false" protected="true" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="false"/>
+</class-diagram>

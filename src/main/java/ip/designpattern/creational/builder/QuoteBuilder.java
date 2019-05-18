@@ -6,7 +6,7 @@ public interface QuoteBuilder {
 	
 	public QuoteBuilder addAdditionalInsured(Insured insured);
 	
-	public QuoteBuilder addQuestionnaire(Questionnaires questionnaires);
+	public QuoteBuilder setQuestionnaire(Questionnaires questionnaires);
 	
 	public Quote getQuote();
 	

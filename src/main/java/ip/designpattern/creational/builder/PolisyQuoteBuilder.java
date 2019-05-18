@@ -8,11 +8,20 @@ public class PolisyQuoteBuilder implements QuoteBuilder {
 	private Prospect prospect;
 	private InsuredObject insuredObject;
 	private List<Insured> additionalInsureds = new ArrayList<>();
-	private List<Questionnaires> questionnaires = new ArrayList<>();
+	private Questionnaires questionnaires;
 	private long maintenanceCharges;
 
-	public PolisyQuoteBuilder(Prospect prospect){
+	public PolisyQuoteBuilder(Prospect prospect, InsuredObject insuredObject){
 		this.prospect = prospect;
+		this.insuredObject = insuredObject;
+		
+		// Setting default values
+		InsuredObjectQuestionnaire pncQuestionnaires = new InsuredObjectQuestionnaire();
+		pncQuestionnaires.isInsuranceRejected(true);
+		pncQuestionnaires.setNoOfClaimsInLastThreeYear(5);
+		pncQuestionnaires.setKiloMeters(100000);
+		this.questionnaires = pncQuestionnaires;
+		this.maintenanceCharges = 10000;
 	}
 	
 	@Override
@@ -32,9 +41,9 @@ public class PolisyQuoteBuilder implements QuoteBuilder {
 	}
 
 	@Override
-	public PolisyQuoteBuilder addQuestionnaire(Questionnaires questionnaires) {
+	public PolisyQuoteBuilder setQuestionnaire(Questionnaires questionnaires) {
 		if(questionnaires instanceof InsuredObjectQuestionnaire){
-			this.questionnaires.add((InsuredObjectQuestionnaire)questionnaires);
+			this.questionnaires = ((InsuredObjectQuestionnaire)questionnaires);
 		}
 		return this;
 	}

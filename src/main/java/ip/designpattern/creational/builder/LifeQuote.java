@@ -7,7 +7,7 @@ public class LifeQuote extends Quote {
 	private String fna;
 	
 	public LifeQuote(Prospect prospect, Insured insured, List<Insured> additionalInsureds,
-			List<Questionnaires> questionnaires, String fna) {
+			Questionnaires questionnaires, String fna) {
 		super(prospect, insured, additionalInsureds, questionnaires);
 		this.fna = fna;
 	}

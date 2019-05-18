@@ -7,7 +7,7 @@ public class PolisyQuote extends Quote {
 	private long maintenanceCharge;
 
 	public PolisyQuote(Prospect prospect, Insured insured, List<Insured> additionalInsureds,
-			List<Questionnaires> questionnaires, long maintenanceCharge) {
+			Questionnaires questionnaires, long maintenanceCharge) {
 		super(prospect, insured, additionalInsureds, questionnaires);
 		this.maintenanceCharge = maintenanceCharge;
 	}

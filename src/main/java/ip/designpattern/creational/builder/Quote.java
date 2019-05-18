@@ -7,10 +7,10 @@ public class Quote {
 	private Prospect prospect;
 	private Insured insured;
 	private List<Insured> additionalInsureds;
-	private List<Questionnaires> questionnaires;
+	private Questionnaires questionnaires;
 	
 	public Quote(Prospect prospect, Insured insured, List<Insured> additionalInsureds,
-			List<Questionnaires> questionnaires) {
+			Questionnaires questionnaires) {
 		super();
 		this.prospect = prospect;
 		this.insured = insured;
@@ -30,7 +30,7 @@ public class Quote {
 		return additionalInsureds;
 	}
 
-	public List<Questionnaires> getQuestionnaires() {
+	public Questionnaires getQuestionnaires() {
 		return questionnaires;
 	}
 

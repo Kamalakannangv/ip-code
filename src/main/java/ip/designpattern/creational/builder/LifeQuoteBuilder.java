@@ -8,15 +8,24 @@ public class LifeQuoteBuilder implements QuoteBuilder {
 	private Prospect prospect;
 	private InsuredPerson insuredPerson;
 	private List<Insured> additionalInsureds = new ArrayList<>();
-	private List<Questionnaires> questionnaires = new ArrayList<>();
+	private Questionnaires questionnaires; 
 	private String fna;
 
 	public LifeQuoteBuilder(Prospect prospect){
 		this.prospect = prospect;
+		
+		// setting default values
 		InsuredPerson defaultInsured = new InsuredPerson(prospect);
 		defaultInsured.setSumInsured(100000);
 		defaultInsured.setTerm(10);
-		insuredPerson = defaultInsured;
+		this.insuredPerson = defaultInsured;
+		
+		InsuredPersonQuestionnaires lifeQuestionnaires = new InsuredPersonQuestionnaires();
+		lifeQuestionnaires.isInsuranceRejected(true);
+		lifeQuestionnaires.setNoOfClaimsInLastThreeYear(5);
+		lifeQuestionnaires.setInsuredHeight(10);
+		lifeQuestionnaires.setInsuredWeight(200);
+		this.questionnaires = lifeQuestionnaires;
 	}
 
 	@Override
@@ -28,9 +37,9 @@ public class LifeQuoteBuilder implements QuoteBuilder {
 	}
 
 	@Override
-	public LifeQuoteBuilder addQuestionnaire(Questionnaires questionnaires) {
+	public LifeQuoteBuilder setQuestionnaire(Questionnaires questionnaires) {
 		if(questionnaires instanceof InsuredPersonQuestionnaires){
-			this.questionnaires.add((InsuredPersonQuestionnaires)questionnaires);
+			this.questionnaires = ((InsuredPersonQuestionnaires)questionnaires);
 		}
 		return this;
 	}

@@ -5,9 +5,9 @@ public class CompositeMainClass {
 	public static void main(String[] args) {
 		
 		AddressCollection addressCollection = new AddressCollection();
-		addressCollection.printAllState(addressCollection.getRootComponentAddress());
-		addressCollection.printAllDistrict(addressCollection.getRootComponentAddress());
-		addressCollection.printAllStateAndDistrict(addressCollection.getRootComponentAddress());
+		addressCollection.printAllState();
+		addressCollection.printAllDistrict();
+		addressCollection.printAllStateAndDistrict();
 		
 	}
 
