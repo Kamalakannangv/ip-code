@@ -38,6 +38,8 @@ public class DecoratorMainClass {
 		emailDisclaimerNotifier.sendNotification(message, customer);
 		*/
 		
+		// Notification through Email with disclaimer and SMS
+		
 		EmailNotifier emailNotifier = new EmailNotifier(mailNotifier);
 		Notifier emailDisclaimerNotifier = new EmailDisclaimerNotifier(emailNotifier);
 		Notifier smsNotifier = new SMSNotifier(emailDisclaimerNotifier);
