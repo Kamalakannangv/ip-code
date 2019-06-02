@@ -1,4 +1,4 @@
-package ip.designpattern.structural.decorator;
+package ip.designpattern.behavioural.chainofresponsibility;
 
 public class Customer {
 
@@ -9,6 +9,7 @@ public class Customer {
 	private String mobileNo;
 	private String address;
 	private String facebookId;
+	private NotificationMedium notificationMedium;
 	
 	public Customer(String name, String customerId) {
 		this.name = name;
@@ -51,4 +52,16 @@ public class Customer {
 		this.facebookId = facebookId;
 	}
 
+	public NotificationMedium getNotificationMedium() {
+		return notificationMedium;
+	}
+
+	public void setNotificationMedium(NotificationMedium notificationMedium) {
+		this.notificationMedium = notificationMedium;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+	
 }
